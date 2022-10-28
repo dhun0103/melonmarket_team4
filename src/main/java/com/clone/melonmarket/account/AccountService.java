@@ -1,5 +1,6 @@
 package com.clone.melonmarket.account;
 
+import com.clone.melonmarket.config.UserDetailsImpl;
 import com.clone.melonmarket.exception.CustomException;
 import com.clone.melonmarket.exception.ErrorCode;
 import com.clone.melonmarket.global.GlobalResponseDto;
@@ -30,7 +31,7 @@ public class AccountService {
             throw new CustomException(ErrorCode.AlreadyHaveEmail);
         }
         if(accountRepository.findByAccountName(accountRequestDto.getAccountName()).isPresent()) {
-            throw new CustomException(ErrorCode.AlreadyHaveEmail);
+            throw new CustomException(ErrorCode.AlreadyHaveName);
         }
         accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
 
@@ -53,7 +54,7 @@ public class AccountService {
     @Transactional
     public GlobalResponseDto nameCheck(AccountNameRequestDto accountNameRequestDto) {
         if(accountRepository.findByAccountName(accountNameRequestDto.getAccountName()).isPresent()) {
-            throw new CustomException(ErrorCode.AlreadyHaveEmail);
+            throw new CustomException(ErrorCode.AlreadyHaveName);
         }
         return new GlobalResponseDto("Success account name check", HttpStatus.OK.value());
     }
@@ -94,4 +95,11 @@ public class AccountService {
         response.addHeader(JwtUtil.ACCESS_TOKEN, tokenDto.getAccessToken());
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
     }
+
+    @Transactional
+    public GlobalResponseDto logout(UserDetailsImpl userDetails) {
+        refreshTokenRepository.deleteAllByAccountEmail(userDetails.getAccount().getEmail());
+        return new GlobalResponseDto("Success Logout", HttpStatus.OK.value());
+    }
+
 }

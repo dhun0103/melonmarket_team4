@@ -30,6 +30,10 @@ public class Account extends TimeStamped {
     @Column
     private String phoneNum;
 
+    @Column
+    private double temp = 36.5;
+
+
 
     public Account(AccountRequestDto accountRequestDto) {
         this.email = accountRequestDto.getEmail();
