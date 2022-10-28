@@ -25,7 +25,7 @@ public class Account extends TimeStamped {
     private String accountName;
 
     @Column
-    private String password;
+    private String accountPw;
 
     @Column
     private String phoneNum;
@@ -38,7 +38,7 @@ public class Account extends TimeStamped {
     public Account(AccountRequestDto accountRequestDto) {
         this.email = accountRequestDto.getEmail();
         this.accountName = accountRequestDto.getAccountName();
-        this.password = accountRequestDto.getPassword();
+        this.accountPw = accountRequestDto.getAccountPw();
         this.phoneNum = accountRequestDto.getPhoneNum();
 
     }

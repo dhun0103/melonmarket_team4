@@ -33,7 +33,14 @@ public class AccountService {
         if(accountRepository.findByAccountName(accountRequestDto.getAccountName()).isPresent()) {
             throw new CustomException(ErrorCode.AlreadyHaveName);
         }
-        accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
+
+        // 비밀번호 일치 확인
+        String password = accountRequestDto.getAccountPw();
+        if(!password.equals(accountRequestDto.getAccountPwConfirm())){
+            throw new CustomException(ErrorCode.NotMatchPassword);
+        }
+
+        accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getAccountPw()));
 
         Account account = new Account(accountRequestDto);
         accountRepository.save(account);
@@ -67,7 +74,7 @@ public class AccountService {
         );
 
         // 비밀번호 맞는지 확인
-        if(!passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())) {
+        if(!passwordEncoder.matches(loginRequestDto.getAccountPw(), account.getAccountPw())) {
             throw new CustomException(ErrorCode.NotMatchPassword);
         }
 
