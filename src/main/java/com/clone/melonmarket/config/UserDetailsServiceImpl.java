@@ -1,5 +1,7 @@
 package com.clone.melonmarket.config;
 
+import com.clone.melonmarket.account.Account;
+import com.clone.melonmarket.account.AccountRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

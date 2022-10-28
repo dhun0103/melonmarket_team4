@@ -1,5 +1,7 @@
 package com.clone.melonmarket.jwt;
 
+import com.clone.melonmarket.account.RefreshToken;
+import com.clone.melonmarket.account.RefreshTokenRepository;
 import com.clone.melonmarket.config.UserDetailsServiceImpl;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
