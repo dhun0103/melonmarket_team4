@@ -25,14 +25,14 @@ public class Post extends TimeStamped{
     private Long postLikeCount;
     private String place;
 
-    @ManyToOne
+    @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "accountId")
     private Account account;
 
     @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
     private List<Comment> comments = new ArrayList<>();
 
-    @OneToMany
+    @OneToMany(mappedBy = "post", fetch = FetchType.LAZY)
     private List<Image> image;
 
     public Post(PostRequestDto postRequestDto, Account account) {
@@ -41,6 +41,13 @@ public class Post extends TimeStamped{
         this.price = postRequestDto.getPrice();
         this.place = postRequestDto.getPlace();
         this.account = account;
+    }
+
+    public void updatePost(PostRequestDto postRequestDto) {
+        this.title = postRequestDto.getTitle();
+        this.contents = postRequestDto.getContents();
+        this.price = postRequestDto.getPrice();
+        this.place = postRequestDto.getPlace();
     }
 
 }

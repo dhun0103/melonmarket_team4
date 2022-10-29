@@ -22,7 +22,7 @@ public class PostController {
 
     private final PostService postService;
 
-
+    // 게시글 작성하기
     @PostMapping(value = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public GlobalResponseDto createPost(@RequestParam("post") String post,
                                         @RequestPart("image") List<MultipartFile> image,
@@ -32,5 +32,18 @@ public class PostController {
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
 
         return postService.createPost(image, postRequestDto, userDetails);
+    }
+
+    // 게시글 수정하기
+    @PostMapping(value = "/posts/{postId}")
+    public GlobalResponseDto updatePost(@RequestParam("post") String post,
+                                    @RequestPart("image") List<MultipartFile> image,
+                                    @AuthenticationPrincipal UserDetailsImpl userDetails,
+                                    @PathVariable Long postId) throws IOException {
+
+        Gson gson = new Gson();
+        PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
+
+        return postService.updatePost(image, postRequestDto, userDetails, postId);
     }
 }
