@@ -18,7 +18,10 @@ public enum ErrorCode {
     CantDelete(HttpStatus.BAD_REQUEST.value(), "P009", "삭제 권한이 없습니다."),
     NotFoundMypage(HttpStatus.BAD_REQUEST.value(), "P010", "마이페이지를 찾을 수 없습니다."),
     NotTeamLeader(HttpStatus.BAD_REQUEST.value(), "P011", "공지는 팀장님만 작성이 가능합니다."),
-    AlreadyHaveName(HttpStatus.BAD_REQUEST.value(), "P012", "이미 존재하는 닉네임 입니다.");
+    AlreadyHaveName(HttpStatus.BAD_REQUEST.value(), "P012", "이미 존재하는 닉네임 입니다."),
+    NOTMATCHEDACCOUNT(HttpStatus.BAD_REQUEST.value(), "P0123", "작성자만 삭제할 수 있습니다."),
+    NotFoundCocomment(HttpStatus.NOT_FOUND.value(), "P013", "대댓글이 존재하지 않습니다.");
+
 
     private final int httpStatus;
     private final String errorCode;
