@@ -81,4 +81,21 @@ public class PostService {
 
         return new GlobalResponseDto("Success Update", HttpStatus.OK.value());
     }
+
+    @Transactional
+    public GlobalResponseDto deletePost(Long postId, UserDetailsImpl userDetails) {
+
+        // postId로 Post객체 찾기.
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NotFoundPost));
+
+        // 게시글 작성자만 삭제 하도록 예외처리
+        if (!userDetails.getAccount().getAccountId().equals(post.getAccount().getAccountId()))
+            throw new CustomException(ErrorCode.CantDelete);
+
+        // 삭제
+        postRepository.deleteById(postId);
+
+        return new GlobalResponseDto("게시글 삭제가 완료되었습니다!", HttpStatus.OK.value());
+    }
 }
