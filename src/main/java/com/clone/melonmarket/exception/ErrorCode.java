@@ -20,6 +20,7 @@ public enum ErrorCode {
     NotTeamLeader(HttpStatus.BAD_REQUEST.value(), "P011", "공지는 팀장님만 작성이 가능합니다."),
     AlreadyHaveName(HttpStatus.BAD_REQUEST.value(), "P012", "이미 존재하는 닉네임 입니다.");
 
+
     private final int httpStatus;
     private final String errorCode;
     private final String message;

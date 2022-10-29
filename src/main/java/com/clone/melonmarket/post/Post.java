@@ -38,4 +38,11 @@ public class Post {
         this.account = account;
     }
 
+    public void updatePost(PostRequestDto postRequestDto) {
+        this.title = postRequestDto.getTitle();
+        this.contents = postRequestDto.getContents();
+        this.price = postRequestDto.getPrice();
+        this.place = postRequestDto.getPlace();
+    }
+
 }
