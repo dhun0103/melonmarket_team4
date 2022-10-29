@@ -9,6 +9,7 @@ import com.clone.melonmarket.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -18,6 +19,7 @@ public class CommentService {
     private final PostRepository postRepository;
 
     //댓글 작성
+    @Transactional
     public GlobalResponseDto createComment(Long postId, CommentRequestDto commentRequestDto, Account account) {
         Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NotFoundPost)
@@ -28,6 +30,7 @@ public class CommentService {
         return new GlobalResponseDto("Success create comment", HttpStatus.OK.value());
     }
 
+    @Transactional
     public GlobalResponseDto deleteComment(Long commentId, Account account) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundComment)

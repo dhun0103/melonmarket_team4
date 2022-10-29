@@ -55,6 +55,19 @@ public class PostController {
         return postService.deletePost(postId, userDetails);
     }
 
+    // 하나 조회
+    @GetMapping(value = "/posts/{postId}")
+    public PostResponseDto getOnePost(@PathVariable Long postId) {
+        return postService.getOnePost(postId);
+    }
+
+    // 전체 조회
+    @GetMapping(value = "/posts")
+    public List<PostAllResponseDto> getAllPost() {
+        return postService.getAllPost();
+    }
+
+//    @PostMapping(value = "")
 
 
 
