@@ -46,4 +46,16 @@ public class PostController {
 
         return postService.updatePost(image, postRequestDto, userDetails, postId);
     }
+
+    // 삭제하기
+    @DeleteMapping(value = "/posts/{postId}")
+    public GlobalResponseDto deletePost(@PathVariable Long postId,
+                                        @AuthenticationPrincipal UserDetailsImpl userDetails) {
+
+        return postService.deletePost(postId, userDetails);
+    }
+
+
+
+
 }
