@@ -18,7 +18,7 @@ public class PostRequestDto {
     @NotBlank
     private String title;
     @NotBlank
-    private String contents;
+    private String content;
     @NotBlank
     private String price;
     @NotBlank
