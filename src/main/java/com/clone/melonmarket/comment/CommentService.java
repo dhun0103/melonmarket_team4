@@ -4,6 +4,8 @@ import com.clone.melonmarket.account.Account;
 import com.clone.melonmarket.exception.CustomException;
 import com.clone.melonmarket.exception.ErrorCode;
 import com.clone.melonmarket.global.GlobalResponseDto;
+import com.clone.melonmarket.post.Post;
+import com.clone.melonmarket.post.PostRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;

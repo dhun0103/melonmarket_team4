@@ -2,6 +2,8 @@ package com.clone.melonmarket.comment;
 
 import com.clone.melonmarket.account.Account;
 import com.clone.melonmarket.cocomment.Cocomment;
+import com.clone.melonmarket.global.TimeStamped;
+import com.clone.melonmarket.post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -15,7 +17,7 @@ import java.util.List;
 @Getter
 @Setter
 @NoArgsConstructor
-public class Comment {
+public class Comment extends TimeStamped{
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long commentId;

@@ -1,6 +1,7 @@
 package com.clone.melonmarket.myPage;
 
 import com.clone.melonmarket.account.Account;
+import com.clone.melonmarket.post.PostResponseDto;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
