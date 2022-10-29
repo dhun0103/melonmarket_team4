@@ -22,6 +22,10 @@ public class S3Uploader {
     @Value("${cloud.aws.s3.bucket}")
     private String bucket;
 
+    // 1. 클라이언트한테 받아온다.
+    // 2. 파싱해서 s3에 저장후 그 url 디비에 저장.
+    // 4. url 리턴
+
     public String uploadFiles(MultipartFile multipartFile, String dirName) throws IOException {
         File uploadFile = convert(multipartFile)  // 파일 변환할 수 없으면 에러
                 .orElseThrow(() -> new IllegalArgumentException("error: MultipartFile -> File convert fail"));
@@ -50,7 +54,7 @@ public class S3Uploader {
         System.out.println("File delete fail");
     }
 
-    // 로컬에 파일 업로드 하기
+//     로컬에 파일 업로드 하기
     private Optional<File> convert(MultipartFile file) throws IOException {
         File convertFile = new File(System.getProperty("user.dir") + "/" + file.getOriginalFilename());
         if (convertFile.createNewFile()) { // 바로 위에서 지정한 경로에 File이 생성됨 (경로가 잘못되었다면 생성 불가능)
@@ -61,4 +65,16 @@ public class S3Uploader {
         }
         return Optional.empty();
     }
+
+//    public File convert(MultipartFile file) throws IOException {
+//        File convFile = new File(file.getOriginalFilename());
+//        convFile.createNewFile();
+//        FileOutputStream fos = new FileOutputStream(convFile);
+//        fos.write(file.getBytes());
+//        fos.close();
+//        return convFile;
+//    }
+
+
+
 }
