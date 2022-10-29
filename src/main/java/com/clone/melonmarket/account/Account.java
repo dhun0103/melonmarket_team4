@@ -1,6 +1,7 @@
 package com.clone.melonmarket.account;
 
 import com.clone.melonmarket.global.TimeStamped;
+import com.clone.melonmarket.myPage.MyPage;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -25,16 +26,24 @@ public class Account extends TimeStamped {
     private String accountName;
 
     @Column
-    private String password;
+    private String accountPw;
 
     @Column
     private String phoneNum;
+
+    @Column
+    private double temp = 36.5;
+
+    @OneToOne(cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JoinColumn(name="myPageId")
+    private MyPage myPage;
+
 
 
     public Account(AccountRequestDto accountRequestDto) {
         this.email = accountRequestDto.getEmail();
         this.accountName = accountRequestDto.getAccountName();
-        this.password = accountRequestDto.getPassword();
+        this.accountPw = accountRequestDto.getAccountPw();
         this.phoneNum = accountRequestDto.getPhoneNum();
 
     }

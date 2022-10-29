@@ -2,16 +2,19 @@ package com.clone.melonmarket.post;
 
 
 import com.clone.melonmarket.account.Account;
+import com.clone.melonmarket.comment.Comment;
+import com.clone.melonmarket.global.TimeStamped;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
 @Getter
 @NoArgsConstructor
-public class Post {
+public class Post extends TimeStamped{
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -22,10 +25,12 @@ public class Post {
     private Long postLikeCount;
     private String place;
 
-
     @ManyToOne
     @JoinColumn(name = "accountId")
     private Account account;
+
+    @OneToMany(mappedBy = "post", cascade = CascadeType.REMOVE, fetch = FetchType.LAZY)
+    private List<Comment> comments = new ArrayList<>();
 
     @OneToMany
     private List<Image> image;

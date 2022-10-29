@@ -1,10 +1,12 @@
 package com.clone.melonmarket.account;
 
+import com.clone.melonmarket.config.UserDetailsImpl;
 import com.clone.melonmarket.exception.CustomException;
 import com.clone.melonmarket.exception.ErrorCode;
 import com.clone.melonmarket.global.GlobalResponseDto;
 import com.clone.melonmarket.jwt.JwtUtil;
 import com.clone.melonmarket.jwt.TokenDto;
+import com.clone.melonmarket.myPage.MyPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -30,11 +32,21 @@ public class AccountService {
             throw new CustomException(ErrorCode.AlreadyHaveEmail);
         }
         if(accountRepository.findByAccountName(accountRequestDto.getAccountName()).isPresent()) {
-            throw new CustomException(ErrorCode.AlreadyHaveEmail);
+            throw new CustomException(ErrorCode.AlreadyHaveName);
         }
-        accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getPassword()));
+
+        // 비밀번호 일치 확인
+        String password = accountRequestDto.getAccountPw();
+        if(!password.equals(accountRequestDto.getAccountPwConfirm())){
+            throw new CustomException(ErrorCode.NotMatchPassword);
+        }
+
+        // 비밀번호 암호화
+        accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getAccountPw()));
 
         Account account = new Account(accountRequestDto);
+        account.setMyPage(new MyPage(account));
+
         accountRepository.save(account);
 
         return new GlobalResponseDto("Success signup", HttpStatus.OK.value());
@@ -53,7 +65,7 @@ public class AccountService {
     @Transactional
     public GlobalResponseDto nameCheck(AccountNameRequestDto accountNameRequestDto) {
         if(accountRepository.findByAccountName(accountNameRequestDto.getAccountName()).isPresent()) {
-            throw new CustomException(ErrorCode.AlreadyHaveEmail);
+            throw new CustomException(ErrorCode.AlreadyHaveName);
         }
         return new GlobalResponseDto("Success account name check", HttpStatus.OK.value());
     }
@@ -66,7 +78,7 @@ public class AccountService {
         );
 
         // 비밀번호 맞는지 확인
-        if(!passwordEncoder.matches(loginRequestDto.getPassword(), account.getPassword())) {
+        if(!passwordEncoder.matches(loginRequestDto.getAccountPw(), account.getAccountPw())) {
             throw new CustomException(ErrorCode.NotMatchPassword);
         }
 
@@ -94,4 +106,11 @@ public class AccountService {
         response.addHeader(JwtUtil.ACCESS_TOKEN, tokenDto.getAccessToken());
         response.addHeader(JwtUtil.REFRESH_TOKEN, tokenDto.getRefreshToken());
     }
+
+    @Transactional
+    public GlobalResponseDto logout(UserDetailsImpl userDetails) {
+        refreshTokenRepository.deleteAllByAccountEmail(userDetails.getAccount().getEmail());
+        return new GlobalResponseDto("Success Logout", HttpStatus.OK.value());
+    }
+
 }
