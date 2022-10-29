@@ -6,6 +6,7 @@ import com.clone.melonmarket.exception.ErrorCode;
 import com.clone.melonmarket.global.GlobalResponseDto;
 import com.clone.melonmarket.jwt.JwtUtil;
 import com.clone.melonmarket.jwt.TokenDto;
+import com.clone.melonmarket.myPage.MyPage;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -40,9 +41,12 @@ public class AccountService {
             throw new CustomException(ErrorCode.NotMatchPassword);
         }
 
+        // 비밀번호 암호화
         accountRequestDto.setEncodePwd(passwordEncoder.encode(accountRequestDto.getAccountPw()));
 
         Account account = new Account(accountRequestDto);
+        account.setMyPage(new MyPage(account));
+
         accountRepository.save(account);
 
         return new GlobalResponseDto("Success signup", HttpStatus.OK.value());

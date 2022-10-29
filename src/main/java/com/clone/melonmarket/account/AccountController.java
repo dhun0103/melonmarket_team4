@@ -5,7 +5,6 @@ import com.clone.melonmarket.global.GlobalResponseDto;
 import com.clone.melonmarket.jwt.JwtUtil;
 import lombok.RequiredArgsConstructor;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.parameters.P;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletResponse;
