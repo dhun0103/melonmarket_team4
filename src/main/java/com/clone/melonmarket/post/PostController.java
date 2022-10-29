@@ -35,11 +35,11 @@ public class PostController {
     }
 
     // 게시글 수정하기
-    @PostMapping(value = "/posts/{postId}", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
+    @PostMapping(value = "/posts/{postId}")
     public GlobalResponseDto updatePost(@RequestParam("post") String post,
-                                        @RequestPart("image") List<MultipartFile> image,
-                                        @AuthenticationPrincipal UserDetailsImpl userDetails,
-                                        @PathVariable Long postId) throws IOException {
+                                    @RequestPart("image") List<MultipartFile> image,
+                                    @AuthenticationPrincipal UserDetailsImpl userDetails,
+                                    @PathVariable Long postId) throws IOException {
 
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
