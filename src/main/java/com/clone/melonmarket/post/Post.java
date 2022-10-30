@@ -22,7 +22,7 @@ public class Post extends TimeStamped{
     private String title;
     private String content;
     private String price;
-    private Long postLikeCount;
+    private Long postLikeCount = 0L;
     private String place;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -50,6 +50,14 @@ public class Post extends TimeStamped{
         this.content = postRequestDto.getContent();
         this.price = postRequestDto.getPrice();
         this.place = postRequestDto.getPlace();
+    }
+
+    public void updatePostLikeCnt(Long postLikeCount) {
+        this.postLikeCount = postLikeCount;
+    }
+
+    public void updatePostStatus(Boolean status){
+        this.status = status;
     }
 
 }
