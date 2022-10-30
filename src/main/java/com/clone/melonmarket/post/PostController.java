@@ -67,7 +67,12 @@ public class PostController {
         return postService.getAllPost();
     }
 
-//    @PostMapping(value = "")
+    // 판매 완료
+    @PostMapping(value = "/sale/{postId}")
+    public GlobalResponseDto postSale(@PathVariable Long postId,
+                                      @AuthenticationPrincipal UserDetailsImpl userDetails) {
+        return postService.postSale(postId, userDetails);
+    }
 
 
 

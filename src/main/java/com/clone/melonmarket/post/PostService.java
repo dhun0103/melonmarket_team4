@@ -140,4 +140,21 @@ public class PostService {
 
 
     }
+
+    // 판매완료
+    @Transactional
+    public GlobalResponseDto postSale(Long postId, UserDetailsImpl userDetails) {
+
+        // 해당 게시글 정보 가져오기
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NotFoundPost));
+
+        if (!userDetails.getAccount().getAccountId().equals(post.getAccount().getAccountId()))
+            throw  new CustomException(ErrorCode.CANTSALECOMPLETE);
+
+        if (post.getStatus()) throw new CustomException(ErrorCode.ALREADYSALECOMPLETE);
+        else post.updatePostStatus(true);
+
+        return new GlobalResponseDto("판매가 완료 되었습니다.", HttpStatus.OK.value());
+    }
 }
