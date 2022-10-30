@@ -2,6 +2,8 @@ package com.clone.melonmarket.post;
 
 
 import com.clone.melonmarket.account.Account;
+import com.clone.melonmarket.comment.Comment;
+import com.clone.melonmarket.comment.CommentResponseDto;
 import com.clone.melonmarket.config.UserDetailsImpl;
 import com.clone.melonmarket.exception.CustomException;
 import com.clone.melonmarket.exception.ErrorCode;
@@ -14,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -97,5 +100,44 @@ public class PostService {
         postRepository.deleteById(postId);
 
         return new GlobalResponseDto("게시글 삭제가 완료되었습니다!", HttpStatus.OK.value());
+    }
+
+    @Transactional(readOnly = true)
+    public PostResponseDto getOnePost(Long postId) {
+
+        // postId로 게시글 하나조회
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new CustomException(ErrorCode.NotFoundPost));
+
+        // 이미지 개수만큼 리스트에 추가
+        List<Image> images = new ArrayList<>();
+        for (Image image : post.getImage()) {
+            images.add(image);
+        }
+
+        // 게시글에 해당하는 댓글 post에 추가
+        List<CommentResponseDto> commentResponseDtoList = new ArrayList<>();
+        for (Comment comment : post.getComments()){
+            commentResponseDtoList.add(new CommentResponseDto(comment));
+        }
+
+        return new PostResponseDto(post, commentResponseDtoList, images);
+    }
+
+    @Transactional(readOnly = true)
+    // 전체조회
+    public List<PostAllResponseDto> getAllPost() {
+
+        // 전체 게시글 가져오기
+        List<Post> postList = postRepository.findAllByOrderByCreatedAtDesc();
+        List<PostAllResponseDto> postAllResponseDtoList = new ArrayList<>();
+        for (Post post: postList) {
+            if (!post.getStatus()) postAllResponseDtoList.add(new PostAllResponseDto(post));
+        }
+
+        return postAllResponseDtoList;
+
+
+
     }
 }
