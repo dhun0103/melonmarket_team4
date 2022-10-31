@@ -32,6 +32,8 @@ public class PostService {
     public GlobalResponseDto createPost(List<MultipartFile> multipartFile,
                                         PostRequestDto postRequestDto,
                                         UserDetailsImpl userDetails) throws IOException {
+        //예외처리
+
 
         // 유저 정보로 Post객체 생성
         Post post = new Post(postRequestDto, userDetails.getAccount());
