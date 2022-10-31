@@ -1,5 +1,6 @@
 package com.clone.melonmarket.config;
 
+import com.clone.melonmarket.account.Account;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
