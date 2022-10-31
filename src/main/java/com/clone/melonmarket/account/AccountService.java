@@ -71,7 +71,7 @@ public class AccountService {
     }
 
     // 로그인
-    public GlobalResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public LoginResponseDto login(LoginRequestDto loginRequestDto, HttpServletResponse response) {
         //아이디가 존재하는지 확인
         Account account = accountRepository.findByEmail(loginRequestDto.getEmail()).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundUser)
@@ -99,7 +99,7 @@ public class AccountService {
         //토큰을 header에 넣어서 클라이언트에게 전달하기
         setHeader(response, tokenDto);
 
-        return new GlobalResponseDto("Success Login", HttpStatus.OK.value());
+        return new LoginResponseDto(account.getAccountName(), "Success Login", HttpStatus.OK.value());
     }
 
     private void setHeader(HttpServletResponse response, TokenDto tokenDto) {

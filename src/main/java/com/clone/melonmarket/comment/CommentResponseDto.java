@@ -13,7 +13,7 @@ public class CommentResponseDto {
     private String accountName;
     private String comment;
     private String createdAt;
-//    private List<Cocomment> cocomment;
+    private List<Cocomment> cocomment;
 
 
     public CommentResponseDto(Comment comment){
@@ -21,7 +21,7 @@ public class CommentResponseDto {
         this.commentId=comment.getCommentId();
         this.accountName=comment.getAccount().getAccountName();
         this.comment=comment.getComment();
-//        this.cocomment=comment.getCocomment();
+        this.cocomment=comment.getCocomment();
         this.createdAt = Chrono.timesAgo(comment.getCreatedAt());
     }
 }

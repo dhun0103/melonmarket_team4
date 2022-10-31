@@ -38,12 +38,15 @@ public class AccountController {
 
     //로그인
     @PostMapping("/auth/login")
-    public GlobalResponseDto login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
+    public LoginResponseDto login(@Valid @RequestBody LoginRequestDto loginRequestDto, HttpServletResponse response) {
         return accountService.login(loginRequestDto, response);
     }
 
+
+    //로그아웃
     @DeleteMapping ("/api/logout")
     public GlobalResponseDto logout(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return accountService.logout(userDetails);
     }
+
 }
