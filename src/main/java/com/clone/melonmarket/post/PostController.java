@@ -24,7 +24,7 @@ public class PostController {
     // 타입 형식을 지정해주면 에러를 줄일 수 있음
     @PostMapping(value = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public GlobalResponseDto createPost(@RequestParam("post") String post,
-                                        @RequestPart("image") List<MultipartFile> image,
+                                        @RequestPart(value = "image", required = false) List<MultipartFile> image,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
 
         Gson gson = new Gson();

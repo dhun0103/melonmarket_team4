@@ -39,12 +39,15 @@ public class PostService {
         Post post = new Post(postRequestDto, userDetails.getAccount());
         postRepository.save(post);
 
+        System.out.println(multipartFile.get(0).getOriginalFilename());
         // List로 image받은후 저장
-        for (MultipartFile file : multipartFile) {
-            String img = s3Uploader.uploadFiles(file, "testdir");
-            System.out.println("img = " + img);
-            Image image = new Image(img, post);
-            imageRepository.save(image);
+        if(!(multipartFile==null)) {
+            for (MultipartFile file : multipartFile) {
+                String img = s3Uploader.uploadFiles(file, "testdir/");
+
+                Image image = new Image(img, post);
+                imageRepository.save(image);
+            }
         }
 
         return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
