@@ -6,9 +6,7 @@ import com.clone.melonmarket.global.GlobalResponseDto;
 import com.google.gson.Gson;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
@@ -23,6 +21,7 @@ public class PostController {
     private final PostService postService;
 
     // 게시글 작성하기
+    // 타입 형식을 지정해주면 에러를 줄일 수 있음
     @PostMapping(value = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public GlobalResponseDto createPost(@RequestParam("post") String post,
                                         @RequestPart("image") List<MultipartFile> image,
@@ -73,6 +72,7 @@ public class PostController {
                                       @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return postService.postSale(postId, userDetails);
     }
+
 
 
 

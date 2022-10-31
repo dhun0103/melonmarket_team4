@@ -42,8 +42,11 @@ public class AccountController {
         return accountService.login(loginRequestDto, response);
     }
 
+
+    //로그아웃
     @DeleteMapping ("/api/logout")
     public GlobalResponseDto logout(@AuthenticationPrincipal UserDetailsImpl userDetails) {
         return accountService.logout(userDetails);
     }
+
 }
