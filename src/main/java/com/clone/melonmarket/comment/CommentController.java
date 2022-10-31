@@ -19,7 +19,7 @@ public class CommentController {
         return commentService.createComment(postId, commentRequestDto, userDetails.getAccount());
     }
 
-    @PutMapping("/comment/{commentId}")
+    @DeleteMapping ("/comment/{commentId}")
     public GlobalResponseDto deleteComment(@PathVariable Long commentId,
                                            @AuthenticationPrincipal UserDetailsImpl userDetails) {
         return commentService.deleteComment(commentId, userDetails.getAccount());

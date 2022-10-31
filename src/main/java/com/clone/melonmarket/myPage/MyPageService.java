@@ -4,6 +4,7 @@ import com.clone.melonmarket.account.Account;
 import com.clone.melonmarket.comment.Comment;
 import com.clone.melonmarket.comment.CommentResponseDto;
 import com.clone.melonmarket.post.Post;
+import com.clone.melonmarket.post.PostAllResponseDto;
 import com.clone.melonmarket.post.PostRepository;
 import com.clone.melonmarket.post.PostResponseDto;
 import lombok.RequiredArgsConstructor;
@@ -24,14 +25,11 @@ public class MyPageService {
 
         // 내가 쓴 게시글 조회
         List<Post> postList = postRepository.findPostsByAccount(account);
-        List<PostResponseDto> postResponseDtos = new ArrayList<>();
+        List<PostAllResponseDto> postResponseDtos = new ArrayList<>();
 
         for (Post foundPost : postList) {
-            List<CommentResponseDto> commentResponseDtos = new ArrayList<>();
-            for (Comment comment : foundPost.getComments()) {
-                commentResponseDtos.add(new CommentResponseDto(comment));
-            }
-            postResponseDtos.add(new PostResponseDto(foundPost, commentResponseDtos));
+
+            postResponseDtos.add(new PostAllResponseDto(foundPost));
         }
 
         return new ResponseEntity(

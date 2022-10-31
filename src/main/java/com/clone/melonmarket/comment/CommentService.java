@@ -30,6 +30,9 @@ public class CommentService {
         return new GlobalResponseDto("Success create comment", HttpStatus.OK.value());
     }
 
+
+    //댓글삭제
+
     @Transactional
     public GlobalResponseDto deleteComment(Long commentId, Account account) {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
