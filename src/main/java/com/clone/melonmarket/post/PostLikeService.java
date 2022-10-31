@@ -30,10 +30,11 @@ public class PostLikeService {
         // 유저 정보 가져오기.
         Account account = userDetails.getAccount();
 
-        PostLike postLike = new PostLike(account, post);
 
         if (!postLikeRepository.existsByPostAndAccount(post, account)) {
             post.updatePostLikeCnt(post.getPostLikeCount() + 1);
+
+            PostLike postLike = new PostLike(account, post);
             postLikeRepository.save(postLike);
             return new GlobalResponseDto("게시글 좋아요 완료", HttpStatus.OK.value());
         }
