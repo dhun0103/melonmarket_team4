@@ -34,6 +34,13 @@ public class Comment extends TimeStamped{
     @ManyToOne
     private Account account;
 
+    @Column
+    private Long step;
+
+//    @Column
+//    @GeneratedValue
+//    private Long parentNum;
+
     @OneToMany(mappedBy = "comment", cascade = CascadeType.REMOVE)
     private List<Cocomment> cocomment;
 
@@ -42,5 +49,14 @@ public class Comment extends TimeStamped{
         this.post = post;
         this.account = account;
     }
+    //댓글 대댓글 한번에 구현
+
+//    public Comment(CommentRequestDto commentRequestDto, Post post, Account account) {
+//        this.comment = commentRequestDto.getComment();
+//        this.post = post;
+//        this.account = account;
+//        this.step = commentRequestDto.getStep();
+//        this.parentNum = commentRequestDto.getStep() == 1 ? null : commentRequestDto.getId();
+//    }
 
 }
