@@ -9,7 +9,7 @@ import javax.validation.constraints.NotBlank;
 @NoArgsConstructor
 public class CommentRequestDto {
 
-//    private Long id;
+//    private Long commentId;
 
     @NotBlank(message = "댓글을 작성해주세요!")
     private String comment;

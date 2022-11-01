@@ -5,7 +5,6 @@ import com.clone.melonmarket.cocomment.Cocomment;
 import com.clone.melonmarket.global.TimeStamped;
 import com.clone.melonmarket.post.Post;
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -34,8 +33,8 @@ public class Comment extends TimeStamped{
     @ManyToOne
     private Account account;
 
-    @Column
-    private Long step;
+//    @Column
+//    private Long step;
 
 //    @Column
 //    @GeneratedValue
