@@ -38,6 +38,7 @@ public class CommentService {
         Comment comment = commentRepository.findById(commentId).orElseThrow(
                 () -> new CustomException(ErrorCode.NotFoundComment)
         );
+
         if(comment.getAccount().getAccountId().equals(account.getAccountId())) {
             commentRepository.deleteById(commentId);
             return new GlobalResponseDto("Success delete comment",HttpStatus.OK.value());

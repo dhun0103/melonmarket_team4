@@ -23,7 +23,7 @@ public class PostController {
 
     // 게시글 작성하기
     // 타입 형식을 지정해주면 에러를 줄일 수 있음
-    @PostMapping(value = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE, MediaType.APPLICATION_JSON_VALUE})
+    @PostMapping(value = "/posts", consumes = {MediaType.MULTIPART_FORM_DATA_VALUE})
     public GlobalResponseDto createPost(@RequestParam(value = "post", required = false) String post,
 //                                        @RequestPart(value = "image", required = false) List<MultipartFile> image,
                                         MultipartHttpServletRequest multipartHttpServletRequest,
@@ -32,7 +32,8 @@ public class PostController {
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
 
-       List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("file");
+       List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("images");
+
 
         return postService.createPost(multipartFiles, postRequestDto, userDetails);
     }

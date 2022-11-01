@@ -39,18 +39,23 @@ public class PostService {
         Post post = new Post(postRequestDto, userDetails.getAccount());
         postRepository.save(post);
 
-        System.out.println(multipartFile.get(0).getOriginalFilename());
         // List로 image받은후 저장
-        if(!(multipartFile==null)) {
+        if(!(multipartFile.size()==0)) {
+
+            System.out.println(multipartFile.get(0).getOriginalFilename());
+
             for (MultipartFile file : multipartFile) {
-                String img = s3Uploader.uploadFiles(file, "testdir/");
+                String img = s3Uploader.uploadFiles(file, "testdir");
 
                 Image image = new Image(img, post);
                 imageRepository.save(image);
             }
-        }
 
-        return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
+            return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
+        }else{
+
+            return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
+        }
     }
 
 
@@ -125,6 +130,8 @@ public class PostService {
         for (Comment comment : post.getComments()){
             commentResponseDtoList.add(new CommentResponseDto(comment));
         }
+
+        System.out.println(new PostResponseDto(post, commentResponseDtoList, images));
 
         return new PostResponseDto(post, commentResponseDtoList, images);
     }
