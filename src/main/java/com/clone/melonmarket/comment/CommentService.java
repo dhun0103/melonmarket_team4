@@ -20,10 +20,30 @@ public class CommentService {
 
     //댓글 작성
     @Transactional
-    public GlobalResponseDto createComment(Long postId, CommentRequestDto commentRequestDto, Account account) {
+    public GlobalResponseDto createComment(Long postId, CommentRequestDto commentRequestDto,  Account account) {
         Post post = postRepository.findById(postId).orElseThrow(
                 ()-> new CustomException(ErrorCode.NotFoundPost)
         );
+
+
+        // 얘네 쓰면 됨.
+//        Comment comment = new Comment(commentRequestDto, post, account);
+//        commentRepository.save(comment);
+
+
+        //이거 쓸필요도 없이
+//        if(commentRequestDto.getStep().equals(1L)) {
+//            Comment comment = new Comment(commentRequestDto, post, account);
+//            commentRepository.save(comment);
+//            comment.setParentNum(null);
+//        } else {
+//            Comment comment = new Comment(recommentRequestDto, post, account);
+//            commentRepository.save(comment);
+//            comment.setParentNum(recommentRequestDto.getCommentId());
+//        }
+
+
+
         Comment comment = new Comment(commentRequestDto, post, account);
         commentRepository.save(comment);
 
