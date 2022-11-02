@@ -46,7 +46,7 @@ public class PostController {
                                     @PathVariable Long postId) throws IOException {
 
         Gson gson = new Gson();
-        PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
+        PostUpdateReqeuestDto postRequestDto = gson.fromJson(post,PostUpdateReqeuestDto.class);
 
         return postService.updatePost(image, postRequestDto, userDetails, postId);
     }
