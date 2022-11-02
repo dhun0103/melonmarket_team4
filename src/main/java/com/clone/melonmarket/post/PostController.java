@@ -48,15 +48,16 @@ public class PostController {
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
         List<MultipartFile> image = multipartHttpServletRequest.getFiles("images");
-        String subStr = imageId.substring(1, imageId.length()-1);
+
         String[] splitStr = {};
-        if (subStr.length() == 0) {
+
+        if (imageId.length() == 0) {
             return postService.updatePost(image, postRequestDto, splitStr, userDetails, postId);
         }
-        else if (subStr.length() == 1)  {
-            splitStr = new String[]{subStr};
+        else if (imageId.length() == 1)  {
+            splitStr = new String[]{imageId};
         }else {
-            splitStr = subStr.split(",");
+            splitStr = imageId.split(",");
         }
         return postService.updatePost(image, postRequestDto, splitStr, userDetails, postId);
     }
