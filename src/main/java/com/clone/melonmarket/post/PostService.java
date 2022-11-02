@@ -43,7 +43,7 @@ public class PostService {
         // List로 image받은후 저장
         if(!(multipartFile==null)) {
             for (MultipartFile file : multipartFile) {
-                String img = s3Uploader.uploadFiles(file, "testdir/");
+                String img = s3Uploader.uploadFiles(file, "testdir");
 
                 Image image = new Image(img, post);
                 imageRepository.save(image);
