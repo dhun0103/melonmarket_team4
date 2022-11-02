@@ -50,21 +50,19 @@ public class PostService {
                 Image image = new Image(img, post);
                 imageRepository.save(image);
             }
-
-            return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
-        }else{
-
-            return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
         }
+        return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
+
     }
 
 
     // 업데이트
     @Transactional
     public GlobalResponseDto updatePost(List<MultipartFile> multipartFile,
-                                        PostRequestDto postRequestDto,
-                                        UserDetailsImpl userDetails,
-                                        Long postId) throws IOException {
+                                  PostRequestDto postRequestDto,
+                                  String[] imgIdList,
+                                  UserDetailsImpl userDetails,
+                                  Long postId) throws IOException {
         // 유저 객체
         Account account = userDetails.getAccount();
 
@@ -79,19 +77,21 @@ public class PostService {
         // 게시글 수정
         post.updatePost(postRequestDto);
 
+
         // 기존에 있는 Image삭제
-        List<Image> image = imageRepository.findByPostPostId(postId);
-        for (int i=0;i<image.size();i++){
-            imageRepository.deleteByPostPostId(postId);
+        for(String imgId : imgIdList) {
+            Long imageId = Long.parseLong(imgId);
+            imageRepository.deleteById(imageId);
         }
 
         // 받아온 이미지 저장
-        for (MultipartFile file : multipartFile) {
-            String img = s3Uploader.uploadFiles(file, "testdir");
-            Image newImage = new Image(img, post);
-            imageRepository.save(newImage);
+        if(!(multipartFile.size()==0)) {
+            for (MultipartFile file : multipartFile) {
+                String img = s3Uploader.uploadFiles(file, "testdir");
+                Image newImage = new Image(img, post);
+                imageRepository.save(newImage);
+            }
         }
-
         return new GlobalResponseDto("Success Update", HttpStatus.OK.value());
     }
 
