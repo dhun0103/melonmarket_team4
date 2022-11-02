@@ -39,9 +39,11 @@ public class PostService {
         Post post = new Post(postRequestDto, userDetails.getAccount());
         postRepository.save(post);
 
-        System.out.println(multipartFile.get(0).getOriginalFilename());
         // List로 image받은후 저장
-        if(!(multipartFile==null)) {
+        if(!(multipartFile.size()==0)) {
+
+            System.out.println(multipartFile.get(0).getOriginalFilename());
+
             for (MultipartFile file : multipartFile) {
                 String img = s3Uploader.uploadFiles(file, "testdir");
 
@@ -49,17 +51,18 @@ public class PostService {
                 imageRepository.save(image);
             }
         }
-
         return new GlobalResponseDto("Success Post", HttpStatus.OK.value());
+
     }
 
 
     // 업데이트
     @Transactional
     public GlobalResponseDto updatePost(List<MultipartFile> multipartFile,
-                                        PostRequestDto postRequestDto,
-                                        UserDetailsImpl userDetails,
-                                        Long postId) throws IOException {
+                                  PostRequestDto postRequestDto,
+                                  String[] imgIdList,
+                                  UserDetailsImpl userDetails,
+                                  Long postId) throws IOException {
         // 유저 객체
         Account account = userDetails.getAccount();
 
@@ -74,19 +77,21 @@ public class PostService {
         // 게시글 수정
         post.updatePost(postRequestDto);
 
+
         // 기존에 있는 Image삭제
-        List<Image> image = imageRepository.findByPostPostId(postId);
-        for (int i=0;i<image.size();i++){
-            imageRepository.deleteByPostPostId(postId);
+        for(String imgId : imgIdList) {
+            Long imageId = Long.parseLong(imgId);
+            imageRepository.deleteById(imageId);
         }
 
         // 받아온 이미지 저장
-        for (MultipartFile file : multipartFile) {
-            String img = s3Uploader.uploadFiles(file, "testdir");
-            Image newImage = new Image(img, post);
-            imageRepository.save(newImage);
+        if(!(multipartFile.size()==0)) {
+            for (MultipartFile file : multipartFile) {
+                String img = s3Uploader.uploadFiles(file, "testdir");
+                Image newImage = new Image(img, post);
+                imageRepository.save(newImage);
+            }
         }
-
         return new GlobalResponseDto("Success Update", HttpStatus.OK.value());
     }
 
@@ -125,6 +130,8 @@ public class PostService {
         for (Comment comment : post.getComments()){
             commentResponseDtoList.add(new CommentResponseDto(comment));
         }
+
+        System.out.println(new PostResponseDto(post, commentResponseDtoList, images));
 
         return new PostResponseDto(post, commentResponseDtoList, images);
     }

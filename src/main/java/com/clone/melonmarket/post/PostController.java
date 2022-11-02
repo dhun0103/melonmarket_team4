@@ -32,7 +32,7 @@ public class PostController {
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
 
-       List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("file");
+       List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("images");
 
         return postService.createPost(multipartFiles, postRequestDto, userDetails);
     }
@@ -40,14 +40,19 @@ public class PostController {
     // 게시글 수정하기
     @PostMapping(value = "/posts/{postId}")
     public GlobalResponseDto updatePost(@RequestParam("post") String post,
-                                    @RequestPart("image") List<MultipartFile> image,
+                                    @RequestParam("imageId") String imageId,
+                                    MultipartHttpServletRequest multipartHttpServletRequest,
                                     @AuthenticationPrincipal UserDetailsImpl userDetails,
                                     @PathVariable Long postId) throws IOException {
 
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
+        String subStr = imageId.substring(1, imageId.length()-1);
+        String[] splitStr = subStr.split(",");
 
-        return postService.updatePost(image, postRequestDto, userDetails, postId);
+
+        List<MultipartFile> image = multipartHttpServletRequest.getFiles("images");
+        return postService.updatePost(image, postRequestDto, splitStr, userDetails, postId);
     }
 
     // 삭제하기
