@@ -47,11 +47,17 @@ public class PostController {
 
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
-        String subStr = imageId.substring(1, imageId.length()-1);
-        String[] splitStr = subStr.split(",");
-
-
         List<MultipartFile> image = multipartHttpServletRequest.getFiles("images");
+        String subStr = imageId.substring(1, imageId.length()-1);
+        String[] splitStr = {};
+        if (subStr.length() == 0) {
+            return postService.updatePost(image, postRequestDto, splitStr, userDetails, postId);
+        }
+        else if (subStr.length() == 1)  {
+            splitStr = new String[]{subStr};
+        }else {
+            splitStr = subStr.split(",");
+        }
         return postService.updatePost(image, postRequestDto, splitStr, userDetails, postId);
     }
 
