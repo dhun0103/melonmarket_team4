@@ -1,5 +1,6 @@
 package com.clone.melonmarket.account;
 
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 
@@ -10,6 +11,7 @@ import javax.validation.constraints.Size;
 import java.time.LocalDateTime;
 @Getter
 @NoArgsConstructor
+@AllArgsConstructor
 public class AccountRequestDto {
 
 
