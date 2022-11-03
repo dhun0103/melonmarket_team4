@@ -62,7 +62,24 @@
 
 <br> <br> <br>
 
-## ✨ 프로젝트 구현 기능
+## ✨ 프로젝트 프리뷰
+
+![image](https://user-images.githubusercontent.com/99253403/199655564-3dc94d14-a663-4db0-afde-25cf97608e86.png)
+![image](https://user-images.githubusercontent.com/99253403/199655604-936b29fe-683c-4b0f-9379-f27d58e97e0d.png)
+![image](https://user-images.githubusercontent.com/99253403/199655637-06295c2a-133d-40b0-8def-08e7566f5242.png)
+![image](https://user-images.githubusercontent.com/99253403/199655647-282b4b2a-4f3c-4149-9fad-94eb664ca220.png)
+![image](https://user-images.githubusercontent.com/99253403/199655664-4745a59e-9bd7-420c-b13f-660d85354bb0.png)
+![image](https://user-images.githubusercontent.com/99253403/199655674-cf2283d1-edab-4076-b668-8709085ba4e9.png)
+
+<br> <br> <br>
+
+## 와이어프레임
+
+![image](https://user-images.githubusercontent.com/99253403/199655818-505932f5-48f8-477a-8bea-ac979fa3a6ca.png)
+
+<br> <br> <br>
+
+## ✨ 프로젝트 소개
 
 </div>
 
