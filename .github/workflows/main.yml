@@ -24,10 +24,11 @@ jobs:
 
     steps:
     - name: Run chmod to make gradlew executable
-      run: ls -al
-      
+      run: cd ../
+    
     - name: Run chmod to make gradlew executable
-      run: find -name "*gradlew*"
+      run: ls -al
+
       
     - name: Run chmod to make gradlew executable
       run: chmod +x ../../gradlew
