@@ -24,7 +24,7 @@ jobs:
 
     steps:
     - name: Run chmod to make gradlew executable
-      run: chmod +x ./gradle    
+      run: chmod +x gradle    
     
     # (1) 기본 체크아웃
     - name: Checkout
