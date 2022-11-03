@@ -24,10 +24,10 @@ jobs:
 
     steps:
     - name: Run chmod to make gradlew executable
-      run: find / -name "*gradlew*"
+      run: sudo find / -name "*gradlew*"
     
     - name: Run chmod to make gradlew executable
-      run: chmod +x ./gradlew clean build
+      run: chmod +x ./gradlew
     
     # (1) 기본 체크아웃
     - name: Checkout
