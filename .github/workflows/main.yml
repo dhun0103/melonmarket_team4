@@ -24,7 +24,7 @@ jobs:
 
     steps:
     - name: Run chmod to make gradlew executable
-      run: sudo find / -name "*gradlew*"
+      run: pwd
     
     - name: Run chmod to make gradlew executable
       run: chmod +x ./gradlew
