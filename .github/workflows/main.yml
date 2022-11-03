@@ -23,6 +23,8 @@ jobs:
     environment: production
 
     steps:
+    - name: Run chmod to make gradlew executable
+      run: pwd
       
     - name: Run chmod to make gradlew executable
       run: chmod +x ../../gradlew
