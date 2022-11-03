@@ -29,10 +29,15 @@ public class PostController {
                                         MultipartHttpServletRequest multipartHttpServletRequest,
                                         @AuthenticationPrincipal UserDetailsImpl userDetails) throws IOException {
 
+
         Gson gson = new Gson();
         PostRequestDto postRequestDto = gson.fromJson(post,PostRequestDto.class);
 
+
        List<MultipartFile> multipartFiles = multipartHttpServletRequest.getFiles("images");
+
+        System.out.println(multipartFiles.get(0).getOriginalFilename());
+        System.out.println("---------");
 
         return postService.createPost(multipartFiles, postRequestDto, userDetails);
     }
