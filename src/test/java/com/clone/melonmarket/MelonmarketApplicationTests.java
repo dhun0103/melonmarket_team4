@@ -14,10 +14,14 @@ class MelonmarketApplicationTests {
 	@Test
 	void jasypt() {
 		String url = "imageputbucket";
+		String a ="AKIAX5IVUWAHM35NZL4B";
+		String b="ZlZISnq0gmnVmsnXHc7e6p8m0b5qsVwDcOaimw31";
 
 
 		System.out.println("안뇽");
 		System.out.println(jasyptEncoding(url));
+		System.out.println(jasyptEncoding(a));
+		System.out.println(jasyptEncoding(b));
 	}
 
 	public String jasyptEncoding(String value) {
